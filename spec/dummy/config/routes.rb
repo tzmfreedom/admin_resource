@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   namespace :admin do
-    resources :dummy
+    resources :hoges
   end
 end
