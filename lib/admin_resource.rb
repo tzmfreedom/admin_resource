@@ -10,6 +10,8 @@
 require 'active_support/concern'
 require 'admin_resource/helper'
 require 'admin_resource/version'
+require 'ransack'
+require 'kaminari'
 
 module AdminResource
   include ::AdminResource::Helper
