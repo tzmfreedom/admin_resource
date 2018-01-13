@@ -8,6 +8,7 @@
 # end
 
 require 'active_support/concern'
+require 'admin_resource/railtie'
 require 'admin_resource/helper'
 require 'admin_resource/version'
 require 'ransack'
@@ -22,9 +23,17 @@ module AdminResource
     before_action :set_record, only: %i[show edit update]
     before_action :set_link_variables
 
-    helper_method :record_path, :records_path, :new_record_path,
-                  :edit_record_path, :record, :records,
-                  :list_fields, :show_fields, :search_fields, :model_klass
+    helper_method :model_klass
+  end
+
+  def record_params
+    params.require(:"#{model_klass.name.underscore}").permit(*permitted_fields)
+  end
+
+  def set_record
+    relation = model_klass
+    relation = relation.eager_load(eager_load) if eager_load
+    @record = relation.find(params[:id])
   end
 
   DSL_METHODS = %W[permitted_fields show_fields list_fields search_fields eager_load]
@@ -35,34 +44,16 @@ module AdminResource
     end
   end
 
-  def record_params
-    params.require(:"#{model_klass.name.underscore}").permit(*permitted_fields)
-  end
-
-  def set_record
-    relation = model_klass
-    relation = relation.eager_load(eager_load) if eager_load
-    record = relation.find(params[:id])
-    instance_variable_set(:"#{record_instance_variable_name}", record)
-  end
-
-  def record_instance_variable_name
-    "@#{model_klass.name.underscore}"
-  end
-
-  def records_instance_variable_name
-    "@#{model_klass.name.underscore.pluralize}"
-  end
-
   class_methods do
     ACTIONS = %W[new create index show edit update destroy]
+    PER_PAGE = 30
 
     DSL_METHODS.each do |method|
-      define_method(method) do |fields = nil|
-        if fields
-          instance_variable_set(:"@#{method}", fields)
-        else
+      define_method(method) do |*fields|
+        if fields.blank?
           instance_variable_get(:"@#{method}")
+        else
+          instance_variable_set(:"@#{method}", fields)
         end
       end
     end
@@ -83,7 +74,7 @@ module AdminResource
       define_method(:create) do
         @record = model_klass.new(record_params)
         if @record.save
-          redirect_to record_path(record.id)
+          redirect_to @admin_show_path
         else
           render 'admin/shared/new'
         end
@@ -95,7 +86,7 @@ module AdminResource
         relation = model_klass.all
         relation = relation.eager_load(eager_load) if eager_load
         @q = relation.search(params[:q])
-        @records = paginate(relation: @q.result(distinct: true))
+        @records = @q.result(distinct: true).page(params[:page]).per(PER_PAGE)
         render 'admin/shared/index' if list_fields
       end
     end
@@ -109,7 +100,7 @@ module AdminResource
     def define_update
       define_method(:update) do
         if record.update(record_params)
-          redirect_to record_path(record.id)
+          redirect_to @admin_show_path
         else
           render 'admin/shared/edit'
         end
@@ -125,7 +116,7 @@ module AdminResource
     def define_destroy
       define_method(:destroy) do
         record.destroy
-        redirect_to records_path
+        redirect_to @admin_index_path
       end
     end
   end

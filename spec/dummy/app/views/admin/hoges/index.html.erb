@@ -1,1 +1,8 @@
 hello world
+
+<%= controller.list_fields.to_a %>
+<ul>
+  <% @records.each do |record| %>
+    <li><%= record.name %></li>
+  <% end %>
+</ul>

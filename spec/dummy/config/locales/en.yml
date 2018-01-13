@@ -31,3 +31,11 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    models:
+      hoge: hoge/model_name
+    attributes:
+      hoge:
+        name: hoge/name
+        in: hoge/in
+        bl: hoge/bl
