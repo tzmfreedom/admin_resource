@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Dummy</title>
-    <%= csrf_meta_tags %>
+<head>
+  <title>Dummy</title>
+  <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-  </head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+</head>
 
-  <body>
+<body class="skin-blue fixed">
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="/admin" class="logo">
+      <span class="logo-lg">Admin Page</span>
+    </a>
+    <nav class="navbar navbar-static-top">
+      <div class="navbar-custom-menu">
+      </div>
+    </nav>
+  </header>
+  <%= render 'shared/sidebar' %>
+  <div class="content-wrapper" style="min-height: 960px;">
     <%= yield %>
-  </body>
+  </div>
+</body>
 </html>
