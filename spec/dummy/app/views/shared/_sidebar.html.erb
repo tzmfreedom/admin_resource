@@ -1,0 +1,23 @@
+<aside class="main-sidebar">
+  <section class="sidebar" style="height: auto;">
+    <ul class="sidebar-menu tree" data-widget="tree">
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-dashboard"></i><span>マスタ管理</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <% AdminResource.managed_models.each do |model_klass| %>
+            <li>
+              <%= link_to send("admin_#{model_klass.model_name.plural}_path") do %>
+                <i class="fa fa-circle-o"></i><%= model_klass.model_name.human %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    </ul>
+  </section>
+</aside>

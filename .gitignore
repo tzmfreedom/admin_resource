@@ -7,3 +7,5 @@ spec/dummy/log/*.log
 spec/dummy/tmp/
 .idea/
 vendor/bundle/
+.byebug_history
+spec/dummy/node_modules

@@ -1,18 +1,41 @@
-<table>
-  <thead>
-  <tr>
-    <% controller.list_fields.each do |field| %>
-        <th><%= model_klass.human_attribute_name(field) %></th>
-    <% end %>
-  </tr>
-  </thead>
-  <tbody>
-  <% @records.each do |record| %>
-    <tr>
-    <% controller.list_fields.each do |field| %>
-      <td><%= record.send(field) %></td>
-    <% end %>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title"><%= model_klass.model_name.human %></h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row">
+              <div class="col-sm-6"></div>
+              <div class="col-sm-6"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                  <thead>
+                  <tr role="row">
+                    <% controller.index_params.each do |field| %>
+                        <th><%= model_klass.human_attribute_name(field) %></th>
+                    <% end %>
+                    </thead>
+                  <tbody>
+                  <% @records.each do |record| %>
+                      <tr>
+                        <% controller.index_params.each do |field| %>
+                            <td><%= record.send(field) %></td>
+                        <% end %>
+                      </tr>
+                  <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
