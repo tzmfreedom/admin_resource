@@ -1,7 +1,7 @@
 module Admin
   class HogesController < ApplicationController
     include ::AdminResource
-    actions :index, :show
+    actions :index, :show, :edit, :new, :update, :create, :destroy
 
     index_params :name, :in, :bl
     show_params :name, :in, :bl
