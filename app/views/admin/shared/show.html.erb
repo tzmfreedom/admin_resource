@@ -9,10 +9,10 @@
           <div class="table-responsive">
             <table class="table">
               <tbody>
-              <% controller.permitted_params.each do |field| %>
+              <% controller.show_params.each do |field| %>
                 <tr>
                   <th class="col-sm-3"><%= model_klass.human_attribute_name field %></th>
-                  <td class="col-sm-9"><%= @record.send(field) %></td>
+                  <td class="col-sm-9"><%= @record.display_attribute(field) %></td>
                 </tr>
               <% end %>
               </tbody>
@@ -26,6 +26,5 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </section>
