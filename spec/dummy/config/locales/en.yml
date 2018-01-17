@@ -39,3 +39,4 @@ en:
         name: hoge/name
         in: hoge/in
         bl: hoge/bl
+        created_at: hoge/created_at

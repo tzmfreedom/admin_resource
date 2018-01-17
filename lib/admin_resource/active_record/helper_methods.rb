@@ -26,6 +26,18 @@ module AdminResource
       def admin_edit_path
         url_helper_proxy.send("edit_admin_#{model_name.singular}_path", id)
       end
+
+      def display_attribute(attribute)
+        value = send(attribute)
+        convert_to_display(value)
+      end
+
+      def convert_to_display(value)
+        return super if defined?(super)
+
+        value.class == ::ActiveSupport::TimeWithZone ? I18n.l(value) : value
+        end
+      end
     end
   end
 end
