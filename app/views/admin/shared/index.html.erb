@@ -26,7 +26,7 @@
                         <%= link_to 'Show', record.admin_show_path %>
                       </td>
                       <% controller.index_params.each do |field| %>
-                        <td><%= record.send(field) %></td>
+                        <td><%= record.display_attribute(field) %></td>
                       <% end %>
                     </tr>
                   <% end %>
