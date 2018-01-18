@@ -36,7 +36,6 @@ module AdminResource
         return super if defined?(super)
 
         value.class == ::ActiveSupport::TimeWithZone ? I18n.l(value) : value
-        end
       end
     end
   end
