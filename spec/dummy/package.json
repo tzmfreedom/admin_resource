@@ -2,7 +2,7 @@
   "name": "dummy",
   "private": true,
   "dependencies": {
-    "bootstrap": "~>4.1.2",
+    "bootstrap": "~>4.3.1",
     "bootstrap-sass": "~>4.1.2"
   },
   "devDependencies": {
